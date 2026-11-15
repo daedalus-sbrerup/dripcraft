@@ -1,6 +1,12 @@
 /* The members' hub (see README). Every page opens with a view over the acres: a
    sky, hills fading into the distance and the meadow in front, which fades into
-   the page below. Morning in light mode, night in dark mode. */
+   the page below. Morning in light mode, night in dark mode.
+
+   The green belongs to the land. The page under it is warm paper with dark ink,
+   what can be pressed is the red of the cottage's roof, and each kind of number
+   has a colour of its own wherever it shows: blocks are clay, hours are blue,
+   creatures are plum, trades are emerald, and what is a best or a feat is gold.
+   The four were chosen to stay apart for eyes that do not tell red from green. */
 @font-face {
   font-family: "Fraunces"; font-weight: 400 800; font-display: swap;
   src: url("/fraunces.woff2") format("woff2");
@@ -14,47 +20,59 @@
   --display: "Fraunces", Georgia, "Times New Roman", serif;
   --text: "Figtree", "Segoe UI", system-ui, sans-serif;
   --way: 1;
-  /* The page. */
-  --bg: #eef3e2;
-  --card: #fffefa;
-  --inset: #f3f6e9;
-  --ink: #1b2a1e;
-  --soft: #536554;
-  --faint: #7c8c7b;
-  --line: rgba(27, 42, 30, 0.1);
-  --accent: #2a7a3c;
-  --accent-soft: rgba(42, 122, 60, 0.12);
+  /* The page: paper, ink, and what can be pressed. */
+  --bg: #f5f0e6;
+  --card: #fffdf8;
+  --inset: #f0e9db;
+  --ink: #2b2420;
+  --soft: #665b51;
+  --faint: #73675c;
+  --line: rgba(43, 36, 32, 0.1);
+  --accent: #a8431f;
+  --accent-soft: rgba(204, 96, 48, 0.12);
   --on-accent: #ffffff;
+  /* The kinds of number. */
+  --clay: #cc6030;
+  --azure: #2a78d6;
+  --plum: #a8408f;
+  --emerald: #0f9a72;
   --gold: #8a5d08;
   --gold-soft: #fbecb6;
   --gold-bar: #e0a82a;
+  /* Someone playing, and the sprout beside the name. */
   --live: #1fae48;
-  --glass: rgba(255, 254, 248, 0.86);
-  --shadow: 0 1px 2px rgba(30, 50, 30, 0.06), 0 10px 28px -12px rgba(30, 50, 30, 0.22);
-  --shadow-up: 0 2px 4px rgba(30, 50, 30, 0.08), 0 18px 36px -14px rgba(30, 50, 30, 0.3);
+  --live-ink: #18763a;
+  --sprout: #2a7a3c;
+  /* The wooden signs with the members' names. */
+  --sign: rgba(91, 61, 36, 0.92);
+  --sign-ink: #fff3dc;
+  --glass: rgba(255, 253, 247, 0.86);
+  --shadow: 0 1px 2px rgba(60, 40, 20, 0.06), 0 10px 28px -12px rgba(60, 40, 20, 0.22);
+  --shadow-up: 0 2px 4px rgba(60, 40, 20, 0.08), 0 18px 36px -14px rgba(60, 40, 20, 0.3);
   /* The sky. */
   --sky-1: #62b5e6;
   --sky-2: #a9dcf1;
   --sky-3: #fbf0cd;
-  --sky-ink: #12301d;
-  --sky-accent: #1d6a33;
+  --sky-ink: #14263a;
+  --sky-accent: #17507e;
   --sun: #fff6c2;
   --sun-ring: rgba(255, 244, 180, 0.5);
   --sun-glow: rgba(255, 238, 170, 0.6);
   --cloud: #ffffff;
   --cloud-shade: #e2f0f6;
   /* The land, from far to near. Each line of hills is lighter at its foot, where
-     the haze gathers, and along its top, where the light falls. */
-  --far-1: #93cbd0;
-  --far-1-low: #c2e4d6;
-  --far-1-cap: #b4dfde;
-  --far-2: #7cc4a4;
-  --far-2-low: #a6d9b3;
-  --far-2-cap: #9ed8b9;
-  --far-2-tree: #63b08c;
-  --far-3: #68b877;
-  --far-3-low: #86c986;
-  --far-3-cap: #8fd296;
+     the haze gathers, and along its top, where the light falls. The farthest are
+     blue with the distance, and only the nearest is green. */
+  --far-1: #a7c4e2;
+  --far-1-low: #cfe0ee;
+  --far-1-cap: #c3d8ee;
+  --far-2: #86bcc9;
+  --far-2-low: #b2d8d6;
+  --far-2-cap: #a8d5db;
+  --far-2-tree: #6ea6b6;
+  --far-3: #6fbb8a;
+  --far-3-low: #8fcc97;
+  --far-3-cap: #98d6a6;
   --acre-1: #5db45d;
   --acre-2: #4fa84f;
   --acre-3: #439c45;
@@ -62,6 +80,9 @@
   --leaf-lit: #62b860;
   --leaf-dim: #2f7c3c;
   --pine: #2f7c4a;
+  --bloom: #f2a7c0;
+  --bloom-lit: #fbc8d8;
+  --bloom-dim: #dd86a6;
   --trunk: #7b5a3a;
   --wall: #f7e9cb;
   --roof: #c25a40;
@@ -73,28 +94,36 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0c1611;
-    --card: #142019;
-    --inset: #1a2920;
-    --ink: #edf2e4;
-    --soft: #a9b8a6;
-    --faint: #7f907d;
-    --line: rgba(237, 242, 228, 0.09);
-    --accent: #8bd58e;
-    --accent-soft: rgba(139, 213, 142, 0.14);
-    --on-accent: #0c1611;
+    --bg: #0f1217;
+    --card: #171b23;
+    --inset: #1f242e;
+    --ink: #efe9dc;
+    --soft: #b3ad9f;
+    --faint: #958f82;
+    --line: rgba(239, 233, 220, 0.09);
+    --accent: #f0977a;
+    --accent-soft: rgba(240, 151, 122, 0.14);
+    --on-accent: #1a1210;
+    --clay: #e0703a;
+    --azure: #4a93e6;
+    --plum: #c05aa8;
+    --emerald: #1fae7f;
     --gold: #f1c75b;
     --gold-soft: rgba(241, 199, 91, 0.15);
     --gold-bar: #f1c75b;
     --live: #4fdd72;
-    --glass: rgba(18, 30, 23, 0.88);
+    --live-ink: #4fdd72;
+    --sprout: #8bd58e;
+    --sign: rgba(38, 27, 18, 0.9);
+    --sign-ink: #f3e9d2;
+    --glass: rgba(20, 24, 32, 0.88);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 30px -12px rgba(0, 0, 0, 0.7);
     --shadow-up: 0 2px 4px rgba(0, 0, 0, 0.3), 0 20px 40px -14px rgba(0, 0, 0, 0.8);
     --sky-1: #060b20;
     --sky-2: #10204a;
     --sky-3: #2a4b6e;
     --sky-ink: #f4f1dd;
-    --sky-accent: #a9e0a4;
+    --sky-accent: #f3cf7a;
     --sun: #f4f1d6;
     --sun-ring: rgba(244, 241, 214, 0.1);
     --sun-glow: rgba(170, 200, 255, 0.22);
@@ -117,6 +146,9 @@
     --leaf-lit: #1b5640;
     --leaf-dim: #0c2d22;
     --pine: #0e3329;
+    --bloom: #4a2f48;
+    --bloom-lit: #5e3b59;
+    --bloom-dim: #382338;
     --trunk: #1a1915;
     --wall: #202c3b;
     --roof: #141b27;
@@ -165,7 +197,7 @@ img.flag { width: 18px; height: auto; border-radius: 3px; box-shadow: 0 0 0 1px 
   display: flex; align-items: center; gap: 7px; padding: 7px 16px 7px 11px; color: var(--ink);
   font: 700 1.0625rem/1.4 var(--display); letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; view-transition-name: brand;
 }
-.brand svg { width: 22px; height: 22px; color: var(--accent); }
+.brand svg { width: 22px; height: 22px; color: var(--sprout); }
 #nav { display: flex; gap: 2px; padding: 5px; view-transition-name: nav; }
 #nav a {
   position: relative; display: flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px;
@@ -249,7 +281,7 @@ h1.name { --size: clamp(2.5rem, 9.5vw, 4rem); --room: min(100vw - 44px, 900px); 
 .back { margin-bottom: 14px; padding: 5px 13px 5px 12px; text-decoration: none; }
 .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 14px; }
 .button { margin-top: 20px; padding: 10px 20px; background: var(--accent); color: var(--on-accent); font-size: 1rem; text-decoration: none; }
-.status.on { color: var(--accent); }
+.status.on { color: var(--live-ink); }
 @media (max-width: 719px) {
   .words { padding-top: 76px; }
   /* On a phone the sun keeps to the corner, clear of the words. */
@@ -285,20 +317,21 @@ h1.name { --size: clamp(2.5rem, 9.5vw, 4rem); --room: min(100vw - 44px, 900px); 
 }
 
 /* Everyone on the meadow: a row to each stretch, standing a little way down its
-   slope, each with their name and flag at their feet. */
+   slope, each with their name on a wooden sign at their feet, and their flag. */
 .row { position: relative; display: flex; justify-content: center; gap: 14px; margin-top: calc(34px - var(--tall)); }
-.standee { display: flex; flex-direction: column; align-items: center; color: #fff; text-decoration: none; animation: hop 0.55s cubic-bezier(0.3, 1.4, 0.5, 1) both; animation-delay: calc(var(--i, 0) * 45ms + 80ms); }
+.standee { display: flex; flex-direction: column; align-items: center; color: var(--sign-ink); text-decoration: none; animation: hop 0.55s cubic-bezier(0.3, 1.4, 0.5, 1) both; animation-delay: calc(var(--i, 0) * 45ms + 80ms); }
 .standee canvas { height: var(--tall); width: auto; margin: 0 -30px; transition: transform 0.3s cubic-bezier(0.3, 1.7, 0.5, 1); }
 .standee:hover canvas, .standee:focus-visible canvas { transform: translateY(-7px); }
 .standee:active canvas { transform: translateY(1px); }
 .tag {
   position: relative; display: flex; align-items: center; gap: 5px; max-width: 100%; margin-top: 6px; padding: 2px 8px; border-radius: 7px;
-  background: rgba(12, 34, 19, 0.84); font-size: 0.75rem; font-weight: 700; line-height: 1.5; transition: background 0.2s;
+  background: var(--sign); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgba(0, 0, 0, 0.25);
+  font-size: 0.75rem; font-weight: 700; line-height: 1.5; transition: background 0.2s;
 }
 .tag b { font-weight: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* The flag is pinned to the corner of the name. */
 .tag img.flag, .tag span.flag { position: absolute; top: -9px; right: -9px; width: 17px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45); font-size: 0.8125rem; }
-.standee:hover .tag { background: rgb(8, 24, 13); }
+.standee:hover .tag { background: color-mix(in srgb, var(--sign), #000 30%); }
 @keyframes hop { from { opacity: 0; transform: translateY(26px); } }
 .still .standee { animation: none; }
 @media (max-width: 559px) {
@@ -325,7 +358,15 @@ h1.name { --size: clamp(2.5rem, 9.5vw, 4rem); --room: min(100vw - 44px, 900px); 
 .page > h2 { margin: 34px 4px 14px; font-size: 1.625rem; }
 .page > h2 small { display: block; margin-top: 2px; font: 500 0.9375rem var(--text); letter-spacing: 0; color: var(--soft); }
 .page > h2:first-child { margin-top: 6px; }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.card { --hue: var(--clay); background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+/* A panel takes the colour of the kind of number it shows: blocks unless it says
+   otherwise. Its heading wears a small block of that colour, and its bars the rest. */
+.when { --hue: var(--azure); }
+.creatures { --hue: var(--plum); }
+.trades { --hue: var(--emerald); }
+:is(.road, .days, .blocks, .creatures, .trades, .when) > :is(h2, h3)::before {
+  content: ""; display: inline-block; width: 0.5em; height: 0.5em; margin-right: 0.45em; border-radius: 2px; background: var(--hue); vertical-align: 0.08em;
+}
 a.card { display: block; color: inherit; text-decoration: none; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s; }
 a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-up); }
 a.card:active { transform: scale(0.985); }
@@ -354,15 +395,15 @@ a.card.before:hover .arrow { translate: -3px 0; }
 .sofar strong { font: 650 2rem/1.15 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .sofar span { font-size: 0.9375rem; color: var(--soft); }
 .track { position: relative; height: 16px; overflow: hidden; border-radius: 5px; background: var(--inset); box-shadow: inset 0 0 0 1px var(--line); }
-.track i { display: block; height: 100%; min-width: 4px; background: linear-gradient(color-mix(in srgb, var(--accent), #fff 22%), var(--accent)); }
+.track i { display: block; height: 100%; min-width: 4px; background: linear-gradient(color-mix(in srgb, var(--hue), #fff 22%), var(--hue)); }
 .track.reached i { background: linear-gradient(color-mix(in srgb, var(--gold-bar), #fff 25%), var(--gold-bar)); }
 .track::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--card) calc(10% - 2px) 10%); }
 .ends { display: flex; justify-content: space-between; gap: 12px; margin-top: 7px; font-size: 0.8125rem; font-weight: 700; color: var(--faint); font-variant-numeric: tabular-nums; }
 .ends .done { color: var(--gold); }
 /* Bars standing side by side: the server's days, and a member's hours. */
 .strip { display: flex; align-items: flex-end; gap: 3px; height: 84px; padding-top: 4px; }
-.strip i { flex: 1; min-width: 0; min-height: 2px; border-radius: 3px 3px 1px 1px; background: color-mix(in srgb, var(--accent) 28%, transparent); }
-.strip i.lit { background: var(--accent); }
+.strip i { flex: 1; min-width: 0; min-height: 2px; border-radius: 3px 3px 1px 1px; background: color-mix(in srgb, var(--hue) 28%, transparent); }
+.strip i.lit { background: var(--hue); }
 .strip i.gold { background: var(--gold-bar); }
 .strip.hourly { height: 60px; gap: 2px; }
 .key { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: 0.875rem; color: var(--soft); text-wrap: pretty; }
@@ -420,6 +461,12 @@ a.card:hover .plot canvas { transform: translateY(-5px); }
 .tile { padding: 14px 16px 13px; }
 .tile:first-child { grid-column: span 2; }
 .tile small { display: block; font-size: 0.8125rem; font-weight: 700; color: var(--soft); }
+/* Each number wears a small block in the colour of its kind, as the lists below
+   do: time played, blocks placed, blocks broken, mobs killed, villager trades. */
+.tile small::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 2px; background: var(--hue); }
+.tile:nth-child(1) { --hue: var(--azure); }
+.tile:nth-child(4) { --hue: var(--plum); }
+.tile:nth-child(5) { --hue: var(--emerald); }
 .tile strong { display: block; font: 650 1.625rem/1.25 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .tile:first-child strong { font-size: 2.25rem; }
 .lists { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
@@ -427,8 +474,11 @@ a.card:hover .plot canvas { transform: translateY(-5px); }
 .lists h3 { margin: 0 4px 10px; font-size: 1.1875rem; }
 .lists .note, .lists .strip, .lists .ticks { margin-left: 4px; margin-right: 4px; }
 /* A list of things and how many, each with a bar measured against the first. */
-.bars li { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 4px 9px; margin-bottom: 3px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
-.bars li::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--share, 0); min-width: 6px; border-radius: 7px; background: var(--accent-soft); }
+.bars li { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 4px 9px 4px 12px; margin-bottom: 3px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+.bars li::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: var(--share, 0); min-width: 6px; border-radius: 2px 7px 7px 2px;
+  background: color-mix(in srgb, var(--hue) 16%, transparent); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--hue) 75%, transparent);
+}
 .bars li span, .bars li b { position: relative; min-width: 0; }
 .bars li b { font-weight: 700; white-space: nowrap; }
 .bare li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding: 7px 4px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
