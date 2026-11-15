@@ -736,6 +736,11 @@ called `/members`. Caddy answers every address that is not a file, the map or th
 with `hub.html`, which is how a page can be reloaded or shared by its address. An address
 that names no page shows "Nothing here".
 
+The pages say nothing about how they are made: where the numbers come from is told here,
+not at the foot of the page, which has only the credit the country database asks for. A
+link to the hub that is shared in a chat shows the hub's name and a line about it, from
+`og:title` and `og:description` in `hub.html`.
+
 The look is a view over the acres: a sky with a square sun, hills that fade into the
 distance with trees and a cottage on them, and the meadow in front, where the members
 stand, which fades into the page below. In dark mode it is night, with a moon, stars,

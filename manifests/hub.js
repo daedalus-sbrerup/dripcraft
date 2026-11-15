@@ -581,9 +581,9 @@ function moments() {
   if (biggestDay) all.push({ drawing: "day", label: "The biggest day", value: count(biggestDay.blocks) + " blocks",
     when: dayName(biggestDay.day), told: "placed and broken on " + dayName(biggestDay.day, true) });
   if (busiestHour) all.push({ drawing: "hour", label: "The busiest hour", value: count(busiestHour.blocks) + " blocks",
-    when: hourName(busiestHour.at), told: "placed and broken in one hour, " + hourName(busiestHour.at, true), hour: true });
+    when: hourName(busiestHour.at), told: "placed and broken in one hour, " + hourName(busiestHour.at, true) });
   if (fullestHour) all.push({ drawing: "together", label: "The fullest hour", value: fullestHour.members === 1 ? "One of us" : count(fullestHour.members) + " of us",
-    when: hourName(fullestHour.at), told: "at work in the same hour, " + hourName(fullestHour.at, true), hour: true });
+    when: hourName(fullestHour.at), told: "at work in the same hour, " + hourName(fullestHour.at, true) });
   const bests = counted.members.map((t) => t.bests || {});
   const deep = bests.map((b) => b.deepest).filter((y) => typeof y === "number");
   const high = bests.map((b) => b.highest).filter((y) => typeof y === "number");
@@ -1121,8 +1121,7 @@ function membersPage() {
   });
   const words = make("div", "words", make("h1", null, "Members"), make("p", "tally", "Everyone who calls the acres home."));
   const box = new DocumentFragment();
-  const told = players.some((p) => rhythm(tally(p))) && make("p", "aside", "Times of day are shown in your own time.");
-  box.append(scene("sub", 11, words, acre(3, 60, true)), make("div", "page", staggered(grid), told));
+  box.append(scene("sub", 11, words, acre(3, 60, true)), make("div", "page", staggered(grid)));
   return box;
 }
 
@@ -1261,8 +1260,7 @@ function momentsPage() {
   }
   const words = make("div", "words", make("h1", null, "Moments"), make("p", "tally", "Days and hours to remember on the acres."));
   const box = new DocumentFragment();
-  box.append(scene("sub", 31, words, acre(3, 70, true)), make("div", "page", staggered(grid),
-    all.some((moment) => moment.hour) && make("p", "aside", "Hours are shown in your own time.")));
+  box.append(scene("sub", 31, words, acre(3, 70, true)), make("div", "page", staggered(grid)));
   return box;
 }
 
@@ -1430,8 +1428,6 @@ async function load() {
     players = found;
     updated = data.updated;
     state = "ready";
-    document.getElementById("updated").textContent =
-      "Last counted " + new Date(updated * 1000).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) + ".";
     draw(first);
   } catch (error) {
     // Keep showing what was loaded before, if anything.

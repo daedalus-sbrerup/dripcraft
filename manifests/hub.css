@@ -411,7 +411,6 @@ a.card:hover .plot canvas { transform: translateY(-5px); }
 .moment small { font-size: 0.8125rem; font-weight: 800; color: var(--gold); }
 .moment strong { font: 650 1.75rem/1.2 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .moment em { font-size: 0.9375rem; font-style: normal; color: var(--soft); text-wrap: pretty; }
-.aside { margin: 16px 4px 0; font-size: 0.8125rem; color: var(--faint); text-align: center; }
 @media (min-width: 720px) {
   .moments { gap: 16px; }
 }

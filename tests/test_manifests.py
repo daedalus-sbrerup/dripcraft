@@ -359,6 +359,16 @@ class DripcraftPublicTests(unittest.TestCase):
         script = (ROOT / "manifests" / "hub.js").read_text(encoding="utf-8").replace("http://www.w3.org/2000/svg", "")
         self.assertNotRegex(script, r"https?://|[\"'`]//")
 
+    def test_hub_credits_the_country_database_and_explains_nothing_else(self):
+        # DB-IP's licence asks for the link wherever its countries are shown. The rest
+        # of what is behind the numbers is in the README, not on the page.
+        page = (ROOT / "manifests" / "hub.html").read_text(encoding="utf-8")
+        footer = re.search(r"<footer>(.*?)</footer>", page, re.S).group(1)
+        self.assertIn('<a href="https://db-ip.com" rel="noopener">IP Geolocation by DB-IP</a>', footer)
+        self.assertEqual(len(re.findall(r"<p\b", footer)), 2)
+        self.assertNotIn('id="updated"', page)
+        self.assertNotIn('"updated")', (ROOT / "manifests" / "hub.js").read_text(encoding="utf-8"))
+
     def test_every_page_of_the_hub_can_be_opened_by_its_address(self):
         # The hub draws its own pages, so an address like /members is not a file. Caddy
         # answers those with the hub, and the hub asks for its files from the root, so
