@@ -736,12 +736,37 @@ called `/members`. Caddy answers every address that is not a file, the map or th
 with `hub.html`, which is how a page can be reloaded or shared by its address. An address
 that names no page shows "Nothing here".
 
+The pages say nothing about how they are made: where the numbers come from is told here,
+not at the foot of the page, which has only the credit the country database asks for. A
+link to the hub that is shared in a chat shows the hub's name and a line about it, from
+`og:title` and `og:description` in `hub.html`.
+
 The look is a view over the acres: a sky with a square sun, hills that fade into the
 distance with trees and a cottage on them, and the meadow in front, where the members
 stand, which fades into the page below. In dark mode it is night, with a moon, stars,
 fireflies and light in the cottage's windows. `hub.js` draws the landscape out of blocks,
 so there are no picture files, and the icon in the browser's tab is written out in
 `hub.html`.
+
+The green is the land's. The hills turn blue with the distance, some trees are in blossom,
+and each member's name is on a wooden sign at their feet. The page under the view is warm
+paper with dark ink, and what can be pressed is the red of the cottage's roof. Each kind
+of number has a colour of its own wherever it shows, as a small block beside its heading
+and in its bars:
+
+| Colour | Kind of number | Where |
+|---|---|---|
+| Clay | blocks | the road to the first million, day by day, what is built from and with, blocks placed and broken |
+| Blue | hours | time played, when a member plays |
+| Plum | creatures | mobs killed, what gets us |
+| Emerald | trades | villager trades, what a member gets from villagers |
+| Gold | a best or a feat | the moments, the feats, the biggest day among the days |
+
+Green is left for the dot of someone who is playing and the sprout beside the name. The
+colours are the custom properties at the top of `hub.css`, once for light and once for
+dark. The four kinds were chosen to stay apart for readers who do not tell red from green,
+and a panel's heading always says what it shows, so nothing is told by colour alone. Text
+is dark enough on its background to read easily (4.5 to 1 or more) in both.
 
 Members are drawn in three dimensions from their skins, the way the game builds a player:
 six boxes, with a second layer for hats, jackets and sleeves. `hub.js` does this itself

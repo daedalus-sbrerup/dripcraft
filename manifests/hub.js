@@ -581,9 +581,9 @@ function moments() {
   if (biggestDay) all.push({ drawing: "day", label: "The biggest day", value: count(biggestDay.blocks) + " blocks",
     when: dayName(biggestDay.day), told: "placed and broken on " + dayName(biggestDay.day, true) });
   if (busiestHour) all.push({ drawing: "hour", label: "The busiest hour", value: count(busiestHour.blocks) + " blocks",
-    when: hourName(busiestHour.at), told: "placed and broken in one hour, " + hourName(busiestHour.at, true), hour: true });
+    when: hourName(busiestHour.at), told: "placed and broken in one hour, " + hourName(busiestHour.at, true) });
   if (fullestHour) all.push({ drawing: "together", label: "The fullest hour", value: fullestHour.members === 1 ? "One of us" : count(fullestHour.members) + " of us",
-    when: hourName(fullestHour.at), told: "at work in the same hour, " + hourName(fullestHour.at, true), hour: true });
+    when: hourName(fullestHour.at), told: "at work in the same hour, " + hourName(fullestHour.at, true) });
   const bests = counted.members.map((t) => t.bests || {});
   const deep = bests.map((b) => b.deepest).filter((y) => typeof y === "number");
   const high = bests.map((b) => b.highest).filter((y) => typeof y === "number");
@@ -644,9 +644,12 @@ function block(parent, x, y, width, height, fill, className) {
   return node;
 }
 
-// A tree, standing on (x, y), with blocks u wide. Far away it is one colour.
+// A tree, standing on (x, y), with blocks u wide. Far away it is one colour. About
+// one leafy tree in four is in blossom: which ones is read off their size, so
+// they are the same on every visit.
 function tree(parent, x, y, u, pine, haze) {
-  const leaf = haze || "var(--leaf)";
+  const kind = !haze && !pine && Math.floor(u * 100) % 4 === 0 ? "bloom" : "leaf";
+  const leaf = haze || `var(--${kind})`;
   if (pine) {
     block(parent, x - u / 2, y - 2 * u, u, 2 * u, haze || "var(--trunk)");
     [5, 3, 3, 1, 1].forEach((wide, row) => block(parent, x - wide * u / 2, y - (3 + row) * u, wide * u, u, haze || "var(--pine)"));
@@ -657,10 +660,10 @@ function tree(parent, x, y, u, pine, haze) {
   block(parent, x - 2.5 * u, y - 5 * u, 5 * u, 2 * u, leaf);
   block(parent, x - 1.5 * u, y - 7 * u, 3 * u, 2 * u, leaf);
   if (haze) return;
-  block(parent, x + 0.5 * u, y - 5 * u, 2 * u, u, "var(--leaf-lit)");
-  block(parent, x - 0.5 * u, y - 7 * u, 2 * u, u, "var(--leaf-lit)");
-  block(parent, x - 2.5 * u, y - 4 * u, 2 * u, u, "var(--leaf-dim)");
-  block(parent, x - 1.5 * u, y - 6 * u, u, u, "var(--leaf-dim)");
+  block(parent, x + 0.5 * u, y - 5 * u, 2 * u, u, `var(--${kind}-lit)`);
+  block(parent, x - 0.5 * u, y - 7 * u, 2 * u, u, `var(--${kind}-lit)`);
+  block(parent, x - 2.5 * u, y - 4 * u, 2 * u, u, `var(--${kind}-dim)`);
+  block(parent, x - 1.5 * u, y - 6 * u, u, u, `var(--${kind}-dim)`);
 }
 
 // A cottage with smoke from its chimney, and windows that glow at night.
@@ -773,7 +776,7 @@ function flora() {
     inside += `<path d="M${x} ${y}h2v6h-2zM${x + 4} ${y + 2}h2v4h-2z" fill="#d8f7a8" opacity="0.4"/>`;
   }
   const petals = ["#fff", "#ffe36e", "#ffb3c7", "#fff", "#ff8d7a", "#cfe3ff"];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 32; i++) {
     const [x, y] = at(2);
     inside += `<path d="M${x + 2} ${y + 6}h2v5h-2z" fill="#1f5a2b" opacity="0.6"/>`
       + `<path d="M${x + 2} ${y}h2v2h2v2h-2v2h-2v-2h-2v-2h2z" fill="${petals[i % petals.length]}"/>`
@@ -1045,9 +1048,9 @@ function homePage() {
     const known = counted.whatGetsUs.filter((e) => e.name !== "unknown" && e.name !== "another member");
     const gets = bars(known.map((e) => [creatures(e.name), e.count]), (n) => count(n) + (n === 1 ? " time" : " times"));
     together = make("div", "together", road(), daysCard(),
-      built && make("section", "card", make("h2", null, "What Lush Acres is built from"),
+      built && make("section", "card blocks", make("h2", null, "What Lush Acres is built from"),
         make("p", "note", count(counted.builtFrom.kinds) + " kinds of block placed in all."), built),
-      gets && make("section", "card", make("h2", null, "What gets us"),
+      gets && make("section", "card creatures", make("h2", null, "What gets us"),
         make("p", "note", "The usual suspects, for all of us together."), gets));
   }
 
@@ -1121,16 +1124,15 @@ function membersPage() {
   });
   const words = make("div", "words", make("h1", null, "Members"), make("p", "tally", "Everyone who calls the acres home."));
   const box = new DocumentFragment();
-  const told = players.some((p) => rhythm(tally(p))) && make("p", "aside", "Times of day are shown in your own time.");
-  box.append(scene("sub", 11, words, acre(3, 60, true)), make("div", "page", staggered(grid), told));
+  box.append(scene("sub", 11, words, acre(3, 60, true)), make("div", "page", staggered(grid)));
   return box;
 }
 
-// A panel on a member's page with a list of what they did most. Nothing when the
-// list is empty.
-function list(title, entries, note) {
+// A panel on a member's page with a list of what they did most, and the kind of
+// number it is, which the stylesheet gives a colour. Nothing when the list is empty.
+function list(kind, title, entries, note) {
   const ol = bars(entries);
-  return ol && make("section", "card", make("h3", null, title), note && make("p", "note", note), ol);
+  return ol && make("section", "card " + kind, make("h3", null, title), note && make("p", "note", note), ol);
 }
 
 // When a member plays, as a line and as the hours of the day in the visitor's time.
@@ -1227,10 +1229,10 @@ function memberPage(p) {
   const when = rhythm(t);
   const lists = make("div", "lists",
     when && whenCard(when),
-    t && list("Builds with", t.buildsWith.map((e) => [thing(e.name), e.count]),
+    t && list("blocks", "Builds with", t.buildsWith.map((e) => [thing(e.name), e.count]),
       t.kinds ? count(t.kinds) + (t.kinds === 1 ? " kind" : " kinds") + " of block in all" : null),
-    t && list("Mobs killed", t.mobs.map((e) => [creatures(e.name), e.count])),
-    t && list("Gets from villagers", t.gets.map((e) => [thing(e.name), e.count])),
+    t && list("creatures", "Mobs killed", t.mobs.map((e) => [creatures(e.name), e.count])),
+    t && list("trades", "Gets from villagers", t.gets.map((e) => [thing(e.name), e.count])),
     t && bestsCard(t),
     t && besideCard(t),
   );
@@ -1261,8 +1263,7 @@ function momentsPage() {
   }
   const words = make("div", "words", make("h1", null, "Moments"), make("p", "tally", "Days and hours to remember on the acres."));
   const box = new DocumentFragment();
-  box.append(scene("sub", 31, words, acre(3, 70, true)), make("div", "page", staggered(grid),
-    all.some((moment) => moment.hour) && make("p", "aside", "Hours are shown in your own time.")));
+  box.append(scene("sub", 31, words, acre(3, 70, true)), make("div", "page", staggered(grid)));
   return box;
 }
 
@@ -1430,8 +1431,6 @@ async function load() {
     players = found;
     updated = data.updated;
     state = "ready";
-    document.getElementById("updated").textContent =
-      "Last counted " + new Date(updated * 1000).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) + ".";
     draw(first);
   } catch (error) {
     // Keep showing what was loaded before, if anything.
